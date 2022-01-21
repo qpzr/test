@@ -8,7 +8,7 @@ on:
 
 env:
   REPO_URL: https://github.com/hanwckf/padavan-4.4.git
-  REPO_BRANCH: master
+  REPO_BRANCH: main
   DIY_P1_SH: mod.sh
   TZ: Asia/Shanghai
   images_dir: /opt/images
