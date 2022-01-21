@@ -41,7 +41,7 @@ jobs:
     - name: Load custom configuration
       run: |
         chmod +x $DIY_P1_SH
-        [ -e $DIY_P1_SH ] && mv $DIY_P1_SH padavan-4.4/trunk
+        [ -e $DIY_P1_SH ] && mv $DIY_P1_SH /padavan-4.4/trunk
    
     - name: Compile the firmware
       run: |
