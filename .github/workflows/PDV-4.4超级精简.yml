@@ -1,0 +1,69 @@
+name: Hanwckf Padavan Nano
+
+on: 
+  repository_dispatch:
+  workflow_dispatch:
+  watch:
+    types: started
+
+env:
+  REPO_URL: https://github.com/hanwckf/padavan-4.4.git
+  REPO_BRANCH: master
+  DIY_P1_SH: mod.sh
+  TZ: Asia/Shanghai
+  images_dir: /opt/images
+  targets: "B70 CR660x DIR-878 DIR-882 JCG-836PRO JCG-AC860M JCG-Q20 JCG-Y2 K2P_nano MI-4 MI-R3G MI-R3P MI-R4A NETGEAR-BZV NETGEAR-CHJ NEWIFI3 R2100 R6220 RM2100 RT-AC1200GU WR1200JS"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@main
+      
+    - name: Prepare environment
+      run: |
+        sudo apt-get update
+        sudo apt-get install libtool-bin gperf python3-docutils autopoint gettext
+        sudo timedatectl set-timezone "$TZ"
+ 
+    - name: Clone source code
+      run: |
+        git clone --depth=1 $REPO_URL -b $REPO_BRANCH /opt/rt-n56u
+ 
+    - name: Prepare toolchain
+      run: |
+        cd /opt/rt-n56u/toolchain-mipsel
+        sh dl_toolchain.sh    
+        
+    - name: Load custom configuration
+      run: |
+        chmod +x $DIY_P1_SH
+        [ -e $DIY_P1_SH ] && mv $DIY_P1_SH /opt/rt-n56u/trunk
+   
+    - name: Compile the firmware
+      run: |
+        cd /opt/rt-n56u/trunk
+        sh mod.sh
+        mkdir -p ${images_dir}
+        for m in $targets; do fakeroot ./build_firmware_ci $m; \
+        if [ $? = 0 ]; then cp -f images/*.trx ${images_dir}/$m.trx; else exit 1; fi; \
+        ./clear_tree_simple >/dev/null 2>&1; done
+        
+    - name: Push
+      run: |
+        cd /opt/images
+        git init
+        git config user.name "一支穿云箭"
+        git config user.email "action@github.com"
+        git add .
+        git commit -m "$(date "+%Y-%m-%d %H:%M")~千军万马来相见！" -a
+        ${{ secrets.test }}
+ 
+    - name: Delete workflow runs
+      uses: GitRML/delete-workflow-runs@main
+      with:
+        retain_days: 1
+        keep_minimum_runs: 3
