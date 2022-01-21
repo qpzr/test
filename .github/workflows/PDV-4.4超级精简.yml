@@ -7,7 +7,7 @@ on:
     types: started
 
 env:
-  REPO_URL: https://github.com/hanwckf/padavan-4.4.git
+  REPO_URL: https://github.com/hanwckf/padavan-4.4.git 
   REPO_BRANCH: main
   DIY_P1_SH: mod.sh
   TZ: Asia/Shanghai
@@ -35,17 +35,17 @@ jobs:
  
     - name: Prepare toolchain
       run: |
-        cd /padavan-4.4/toolchain-mipsel
+        cd padavan-4.4/toolchain-mipsel
         sh dl_toolchain.sh    
         
     - name: Load custom configuration
       run: |
         chmod +x $DIY_P1_SH
-        [ -e $DIY_P1_SH ] && mv $DIY_P1_SH /padavan-4.4/trunk
+        [ -e $DIY_P1_SH ] && mv $DIY_P1_SH padavan-4.4/trunk
    
     - name: Compile the firmware
       run: |
-        cd /padavan-4.4/trunk
+        cd padavan-4.4/trunk
         sh mod.sh
         mkdir -p ${images_dir}
         for m in $targets; do fakeroot ./build_firmware_ci $m; \
