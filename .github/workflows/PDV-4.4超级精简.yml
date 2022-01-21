@@ -11,7 +11,7 @@ env:
   REPO_BRANCH: main
   DIY_P1_SH: mod.sh
   TZ: Asia/Shanghai
-  images_dir: /opt/images
+  images_dir: /images
   targets: "CR660x DIR-878 DIR-882 JCG-836PRO JCG-AC860M JCG-Q20 JCG-Y2 K2P_nano MI-R3P MR2600 NETGEAR-BZV"
 
 jobs:
@@ -31,21 +31,21 @@ jobs:
  
     - name: Clone source code
       run: |
-        git clone --depth=1 $REPO_URL -b $REPO_BRANCH /opt/padavan-4.4
+        git clone --depth=1 $REPO_URL -b $REPO_BRANCH padavan-4.4
  
     - name: Prepare toolchain
       run: |
-        cd /opt/padavan-4.4/toolchain-mipsel
+        cd /padavan-4.4/toolchain-mipsel
         sh dl_toolchain.sh    
         
     - name: Load custom configuration
       run: |
         chmod +x $DIY_P1_SH
-        [ -e $DIY_P1_SH ] && mv $DIY_P1_SH /opt/padavan-4.4/trunk
+        [ -e $DIY_P1_SH ] && mv $DIY_P1_SH /padavan-4.4/trunk
    
     - name: Compile the firmware
       run: |
-        cd /opt/padavan-4.4/trunk
+        cd /padavan-4.4/trunk
         sh mod.sh
         mkdir -p ${images_dir}
         for m in $targets; do fakeroot ./build_firmware_ci $m; \
@@ -54,7 +54,7 @@ jobs:
         
     - name: Push
       run: |
-        cd /opt/images
+        cd /images
         git init
         git config user.name "一支穿云箭"
         git config user.email "action@github.com"
