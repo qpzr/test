@@ -12,7 +12,7 @@ env:
   DIY_P1_SH: mod.sh
   TZ: Asia/Shanghai
   images_dir: /opt/images
-  targets: "B70 CR660x DIR-878 DIR-882 JCG-836PRO JCG-AC860M JCG-Q20 JCG-Y2 K2P_nano MI-4 MI-R3G MI-R3P MI-R4A NETGEAR-BZV NETGEAR-CHJ NEWIFI3 R2100 R6220 RM2100 RT-AC1200GU WR1200JS"
+  targets: "*"
 
 jobs:
   build:
