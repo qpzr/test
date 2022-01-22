@@ -12,11 +12,11 @@ env:
   DIY_P1_SH: mod.sh
   TZ: Asia/Shanghai
   images_dir: /opt/images
-  targets: "CR660x DIR-878 DIR-882 JCG-836PRO JCG-AC860M JCG-Q20 JCG-Y2 K2P_nano MI-R3P MR2600 NETGEAR-BZV"
+  targets: "CR660x DIR-878 DIR-882 JCG-836PRO JCG-AC860M JCG-Q20 JCG-Y2 K2P_nano MI-R3P NETGEAR-BZV"
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
 
     steps:
