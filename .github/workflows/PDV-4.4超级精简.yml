@@ -32,11 +32,6 @@ jobs:
     - name: Clone source code
       run: |
         git clone --depth=1 $REPO_URL -b $REPO_BRANCH /opt/padavan-4.4
-        
-    - name: Run shellcheck
-      run: |
-        cd /opt/padavan-4.4/trunk/tools
-        sh shellcheck.sh
  
     - name: Prepare toolchain
       run: |
