@@ -3,7 +3,7 @@
 #必须 cd /opt/rt-n56u/blob/master/trunk 方可执行sh在这个目录下
 
 echo '修改密码'
-sed -i 's/#define\s*DEF_ROOT_PASSWORD\s*"admin"/#define  DEF_ROOT_PASSWORD     "123"/g' ./user/shared/defaults.h
+#sed -i 's/#define\s*DEF_ROOT_PASSWORD\s*"admin"/#define  DEF_ROOT_PASSWORD     "123"/g' ./user/shared/defaults.h
 
 echo '修改NTP1为中国NTP快速授时服务'
 sed -i "s/ntp1.aliyun.com/cn.ntp.org.cn/g" ./user/shared/defaults.h
