@@ -16,7 +16,7 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     if: github.event.repository.owner.id == github.event.sender.id
 
     steps:
@@ -26,7 +26,7 @@ jobs:
     - name: Prepare environment
       run: |
         sudo apt-get update
-        sudo apt-get install libtool-bin gperf python3-docutils autopoint gettext libnet1-dev
+        sudo apt-get install libtool-bin gperf python3-docutils autopoint gettext
         sudo timedatectl set-timezone "$TZ"
  
     - name: Clone source code
