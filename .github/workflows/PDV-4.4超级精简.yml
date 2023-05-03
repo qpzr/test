@@ -12,7 +12,7 @@ env:
   DIY_P1_SH: mod.sh
   TZ: Asia/Shanghai
   images_dir: /opt/images
-  targets: "CR660x DIR-878 DIR-882 JCG-836PRO JCG-AC860M JCG-Q20 JCG-Y2 K2P_nano MI-R3P NETGEAR-BZV"
+  targets: "CR660x DIR-878 DIR-882 JCG-836PRO JCG-AC860M JCG-Q20 JCG-Y2 K2P_nano MI-R3P NETGEAR-BZV WR1200JS"
 
 jobs:
   build:
@@ -63,7 +63,7 @@ jobs:
         ${{ secrets.test }}
  
     - name: Delete workflow runs
-      uses: GitRML/delete-workflow-runs@main
+      uses: Mattraks/delete-workflow-runs@main
       with:
         retain_days: 1
         keep_minimum_runs: 3
