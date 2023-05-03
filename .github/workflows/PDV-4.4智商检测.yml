@@ -1,7 +1,7 @@
 name: PDV智商检测
 
 env:
-  REPO_URL: https://github.com/hanwckf/padavan-4.4.git
+  REPO_URL: https://github.com/meisreallyba/padavan-4.4.git
   REPO_BRANCH: main
 
 on:
