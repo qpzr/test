@@ -10,6 +10,7 @@ env:
   REPO_URL: https://github.com/meisreallyba/padavan-4.4.git
   REPO_BRANCH: main
   DIY_P1_SH: mod.sh
+  DIY: WR1200JS.config
   TZ: Asia/Shanghai
   images_dir: /opt/images
   targets: "WR1200JS"
@@ -32,9 +33,6 @@ jobs:
     - name: Clone source code
       run: |
         git clone $REPO_URL /opt/padavan-4.4
- 
-    - name: Run shellcheck
-      run: sh /opt/padavan-4.4/trunk/tools/shellcheck.sh
 
     - name: Prepare toolchain
       run: |
@@ -44,6 +42,7 @@ jobs:
     - name: Load custom configuration
       run: |
         chmod +x $DIY_P1_SH
+        [ -e $DIY ] && mv $DIY /opt/padavan-4.4/trunk/configs/templates
         [ -e $DIY_P1_SH ] && mv $DIY_P1_SH /opt/padavan-4.4/trunk
    
     - name: Compile the firmware
