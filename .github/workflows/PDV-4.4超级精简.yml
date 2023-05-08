@@ -30,7 +30,7 @@ jobs:
         sudo timedatectl set-timezone "$TZ"
         
     - name: Run shellcheck
-      run: sh ./trunk/tools/shellcheck.sh
+      run: sh /opt/padavan-4.4/trunk/tools/shellcheck.sh
  
     - name: Clone source code
       run: |
