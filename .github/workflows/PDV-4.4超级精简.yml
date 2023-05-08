@@ -29,18 +29,18 @@ jobs:
         sudo apt-get install libtool-bin gperf python3-docutils autopoint gettext
         sudo timedatectl set-timezone "$TZ"
         
-    - name: Run shellcheck
-      run: sh /opt/padavan-4.4/trunk/tools/shellcheck.sh
- 
     - name: Clone source code
       run: |
         git clone $REPO_URL /opt/padavan-4.4
  
+    - name: Run shellcheck
+      run: sh /opt/padavan-4.4/trunk/tools/shellcheck.sh
+
     - name: Prepare toolchain
       run: |
         cd /opt/padavan-4.4/toolchain-mipsel
         sh dl_toolchain.sh    
-        
+   
     - name: Load custom configuration
       run: |
         chmod +x $DIY_P1_SH
