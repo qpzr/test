@@ -32,7 +32,7 @@ jobs:
         
     - name: Clone source code
       run: |
-        git clone $REPO_URL /opt/padavan-4.4
+        git clone $REPO_URL /opt/rt-n56u
 
     - name: Prepare toolchain
       run: |
@@ -42,15 +42,13 @@ jobs:
     - name: Load custom configuration
       run: |
         chmod +x $DIY_P1_SH
-        [ -e $DIY ] && mv $DIY /opt/padavan-4.4/trunk/configs/templates
-        [ -e $DIY_P1_SH ] && mv $DIY_P1_SH /opt/padavan-4.4/trunk
+        [ -e $DIY_P1_SH ] && mv $DIY_P1_SH /opt/rt-n56u/trunk
    
     - name: Compile the firmware
       run: |
-        cd /opt/padavan-4.4/trunk
+        cd /opt/rt-n56u/trunk
         sh mod.sh
         mkdir -p ${images_dir}
-        sudo ./clear_tree
         for m in $targets; do fakeroot ./build_firmware_ci $m; \
         if [ $? = 0 ]; then cp -f images/*.trx ${images_dir}/$m.trx; else exit 1; fi; \
         ./clear_tree_simple >/dev/null 2>&1; done
