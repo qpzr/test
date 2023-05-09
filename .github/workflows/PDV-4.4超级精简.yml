@@ -35,7 +35,7 @@ jobs:
 
     - name: Prepare toolchain
       run: |
-        cd /opt/padavan-4.4/toolchain-mipsel
+        cd /opt/rt-n56u/toolchain-mipsel
         sh dl_toolchain.sh    
    
     - name: Load custom configuration
