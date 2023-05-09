@@ -9,6 +9,7 @@ on:
 env:
   REPO_URL: https://github.com/meisreallyba/padavan-4.4.git
   REPO_BRANCH: main
+  DIY: WR1200JS.config
   DIY_P1_SH: mod.sh
   TZ: Asia/Shanghai
   images_dir: /opt/images
@@ -31,21 +32,23 @@ jobs:
         
     - name: Clone source code
       run: |
-        git clone $REPO_URL /opt/rt-n56u
+        git clone $REPO_URL /opt/padavan-4.4
 
     - name: Prepare toolchain
       run: |
-        cd /opt/rt-n56u/toolchain-mipsel
+        cd /opt/padavan-4.4/toolchain-mipsel
         sh dl_toolchain.sh    
    
     - name: Load custom configuration
       run: |
         chmod +x $DIY_P1_SH
-        [ -e $DIY_P1_SH ] && mv $DIY_P1_SH /opt/rt-n56u/trunk
+        rm -rf /opt/padavan-4.4/trunk/configs/templates/*.config
+        [ -e $DIY ] && mv $DIY /opt/padavan-4.4/trunk/configs/templates
+        [ -e $DIY_P1_SH ] && mv $DIY_P1_SH /opt/padavan-4.4/trunk
    
     - name: Compile the firmware
       run: |
-        cd /opt/rt-n56u/trunk
+        cd /opt/padavan-4.4/trunk
         sh mod.sh
         mkdir -p ${images_dir}
         for m in $targets; do fakeroot ./build_firmware_ci $m; \
