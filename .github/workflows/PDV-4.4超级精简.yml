@@ -9,7 +9,6 @@ on:
 env:
   REPO_URL: https://github.com/meisreallyba/padavan-4.4.git
   REPO_BRANCH: main
-  DIY: WR1200JS.config
   DIY_P1_SH: mod.sh
   TZ: Asia/Shanghai
   images_dir: /opt/images
@@ -42,8 +41,6 @@ jobs:
     - name: Load custom configuration
       run: |
         chmod +x $DIY_P1_SH
-        rm -rf /opt/padavan-4.4/trunk/configs/templates/*.config
-        [ -e $DIY ] && mv $DIY /opt/padavan-4.4/trunk/configs/templates
         [ -e $DIY_P1_SH ] && mv $DIY_P1_SH /opt/padavan-4.4/trunk
    
     - name: Compile the firmware
