@@ -12,5 +12,5 @@ echo '修改NTP2为国家授时中心'
 sed -i "s/2001:470:0:50::2/ntp.ntsc.ac.cn/g" ./user/shared/defaults.h
 
 echo '超级精简配置'
-sed -i '/### Enable USB support/,$d' ./configs/templates/*.config
-sed -i '$a\CONFIG_FIRMWARE_INCLUDE_LANG_CN=y'  ./configs/templates/*.config
+#sed -i '/### Enable USB support/,$d' ./configs/templates/*.config
+#sed -i '$a\CONFIG_FIRMWARE_INCLUDE_LANG_CN=y'  ./configs/templates/*.config
