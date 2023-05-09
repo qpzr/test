@@ -10,7 +10,6 @@ env:
   REPO_URL: https://github.com/meisreallyba/padavan-4.4.git
   REPO_BRANCH: main
   DIY_P1_SH: mod.sh
-  DIY: WR1200JS.config
   TZ: Asia/Shanghai
   images_dir: /opt/images
   targets: "WR1200JS"
