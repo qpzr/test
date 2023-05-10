@@ -13,7 +13,7 @@ env:
   DIY_P1_SH: mod.sh
   TZ: Asia/Shanghai
   images_dir: /opt/images
-  targets: "WR1200JS K2P"
+  targets: "WR1200JS"
 
 jobs:
   build:
