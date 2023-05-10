@@ -41,6 +41,7 @@ jobs:
    
     - name: Load custom configuration
       run: |
+        chmod +x $DIY
         chmod +x $DIY_P1_SH
         rm -rf /opt/padavan-4.4/trunk/build_firmware_modify
         [ -e $DIY ] && mv $DIY /opt/padavan-4.4/trunk
