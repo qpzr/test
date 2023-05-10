@@ -202,40 +202,6 @@ if [ "$CONFIG_FIRMWARE_INCLUDE_OC" = "y" ]; then
 	sed -i '/CONFIG_MT7621_OC=y/a\CONFIG_MT7621_CPU_FREQ="'$CONFIG_FIRMWARE_MT7621_OC'"' $kernel_tf
 fi
 
-############################# USB #####################################
-if [ "$CONFIG_FIRMWARE_ENABLE_USB" != "y" ] || [ -z "$CONFIG_USB_SUPPORT" ] ; then
-	func_disable_busybox_param "CONFIG_FDISK"
-	func_disable_busybox_param "CONFIG_FEATURE_FDISK_WRITABLE"
-	func_disable_busybox_param "CONFIG_FEATURE_FDISK_ADVANCED"
-	func_disable_busybox_param "CONFIG_MICROCOM"
-	func_disable_busybox_param "CONFIG_EJECT"
-	func_disable_busybox_param "CONFIG_FEATURE_EJECT_SCSI"
-	func_disable_busybox_param "CONFIG_MKSWAP"
-	func_disable_busybox_param "CONFIG_SWAPONOFF"
-	func_disable_busybox_param "CONFIG_FEATURE_VOLUMEID_FAT"
-	func_disable_busybox_param "CONFIG_FEATURE_VOLUMEID_EXFAT"
-	func_disable_busybox_param "CONFIG_FEATURE_VOLUMEID_NTFS"
-	func_disable_busybox_param "CONFIG_FEATURE_VOLUMEID_HFS"
-	func_disable_busybox_param "CONFIG_FEATURE_VOLUMEID_EXT"
-	func_disable_busybox_param "CONFIG_FEATURE_VOLUMEID_XFS"
-	func_disable_busybox_param "CONFIG_FEATURE_VOLUMEID_LINUXSWAP"
-else
-if [ "$CONFIG_FIRMWARE_ENABLE_UFSD" != "y" ] || [ $paragon_hfsplus -eq 0 ] ; then
-	func_disable_busybox_param "CONFIG_FEATURE_VOLUMEID_HFS"
-fi
-############################ exFAT ####################################
-if [ "$CONFIG_FIRMWARE_ENABLE_EXFAT" != "y" ] ; then
-	func_disable_busybox_param "CONFIG_FEATURE_VOLUMEID_EXFAT"
-fi
-############################# XFS #####################################
-if [ "$CONFIG_FIRMWARE_ENABLE_XFS" != "y" ] ; then
-	func_disable_busybox_param "CONFIG_FEATURE_VOLUMEID_XFS"
-fi
-############################# SWAP ####################################
-if [ "$CONFIG_FIRMWARE_ENABLE_SWAP" != "y" ] ; then
-	func_disable_busybox_param "CONFIG_MKSWAP"
-	func_disable_busybox_param "CONFIG_SWAPONOFF"
-fi
 fi
 ############################# XFRM ####################################
 #if [ "$CONFIG_FIRMWARE_INCLUDE_SSWAN" = "y" ] ; then
