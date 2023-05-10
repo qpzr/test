@@ -175,15 +175,6 @@ fi
 if [ -n "$CONFIG_RTC_CLASS" ] ; then
 	func_enable_busybox_param "CONFIG_HWCLOCK"
 fi
-# SFE
-if [ "$CONFIG_FIRMWARE_INCLUDE_SFE" = "y" ] ; then
-	func_enable_kernel_param "CONFIG_SHORTCUT_FE"
-fi
-fi
-############################# XFRM ####################################
-#if [ "$CONFIG_FIRMWARE_INCLUDE_SSWAN" = "y" ] ; then
-#	CONFIG_FIRMWARE_INCLUDE_XFRM=y
-#fi
 echo --------------------------MAKE-DEP--------------------------------
 make dep
 echo --------------------------MAKE-ALL--------------------------------
