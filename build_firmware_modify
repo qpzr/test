@@ -175,6 +175,7 @@ fi
 if [ -n "$CONFIG_RTC_CLASS" ] ; then
 	func_enable_busybox_param "CONFIG_HWCLOCK"
 fi
+fi
 echo --------------------------MAKE-DEP--------------------------------
 make dep
 echo --------------------------MAKE-ALL--------------------------------
