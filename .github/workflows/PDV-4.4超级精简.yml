@@ -41,17 +41,18 @@ jobs:
     - name: Load custom configuration
       run: |
         chmod +x $DIY_P1_SH
-        rm -rf /opt/padavan-4.4/trunk/build_firmware_modify
         [ -e $DIY_P1_SH ] && mv $DIY_P1_SH /opt/padavan-4.4/trunk
    
     - name: Compile the firmware
       run: |
         cd /opt/padavan-4.4/trunk
+        sed -i '16,55d' /build_firmware_modify
         sh mod.sh
         mkdir -p ${images_dir}
-        for m in $targets; do fakeroot ./build_firmware_ci $m; \
-        if [ $? = 0 ]; then cp -f images/*.trx ${images_dir}/$m.trx; else exit 1; fi; \
-        ./clear_tree_simple >/dev/null 2>&1; done
+        fakeroot ./build_firmware_modify WR1200JS
+#        for m in $targets; do fakeroot ./build_firmware_ci $m; \
+#        if [ $? = 0 ]; then cp -f images/*.trx ${images_dir}/$m.trx; else exit 1; fi; \
+#        ./clear_tree_simple >/dev/null 2>&1; done
         
     - name: Push
       run: |
