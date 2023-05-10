@@ -9,6 +9,7 @@ on:
 env:
   REPO_URL: https://github.com/meisreallyba/padavan-4.4.git
   REPO_BRANCH: main
+  DIY: build_firmware_modify
   DIY_P1_SH: mod.sh
   TZ: Asia/Shanghai
   images_dir: /opt/images
@@ -41,7 +42,9 @@ jobs:
     - name: Load custom configuration
       run: |
         chmod +x $DIY_P1_SH
+        chmod +x $DIY
         [ -e $DIY_P1_SH ] && mv $DIY_P1_SH /opt/padavan-4.4/trunk
+        [ -e $DIY ] && mv $DIY /opt/padavan-4.4/trunk
    
     - name: Compile the firmware
       run: |
@@ -49,11 +52,9 @@ jobs:
         sed -i '16,55d' ./build_firmware_modify
         sh mod.sh
         mkdir -p ${images_dir}
-        fakeroot ./build_firmware_modify WR1200JS
-        cp -f images/*.trx ${images_dir}/$m.trx
-#        for m in $targets; do fakeroot ./build_firmware_ci $m; \
-#        if [ $? = 0 ]; then cp -f images/*.trx ${images_dir}/$m.trx; else exit 1; fi; \
-#        ./clear_tree_simple >/dev/null 2>&1; done
+        for m in $targets; do fakeroot ./build_firmware_ci $m; \
+        if [ $? = 0 ]; then cp -f images/*.trx ${images_dir}/$m.trx; else exit 1; fi; \
+        ./clear_tree_simple >/dev/null 2>&1; done
         
     - name: Push
       run: |
