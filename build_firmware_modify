@@ -1,8 +1,4 @@
-### Target Vendor/Product (support only Ralink RT3883/MT7620/MT7621/MT7628)
-CONFIG_VENDOR=Ralink
-CONFIG_PRODUCT=MT7621
-
-### Target ProductID (board select, max #!/bin/bash
+#!/bin/bash
 
 if [ -z "$1" ] || [ "$EUID" != 0 ]; then
 	echo "Please run 'fakeroot $0 PRODUCT_NAME' to start build (see 'configs/templates/')"
@@ -10,8 +6,9 @@ if [ -z "$1" ] || [ "$EUID" != 0 ]; then
 	exit 1
 fi
 
+if [ -z "$2" ];then
 if [ ! -f configs/templates/$1.config ] ; then
-	echo "configs/templates/$1.config not found!"
+	echo "configs/templates/$1.config not found "
 	exit 1
 fi
 
@@ -32,8 +29,14 @@ paragon_hfsplus=0
 
 func_enable_kernel_param()
 {
+	if [ ! -n "$2" ];then
+		own="y"
+	else
+		own="m"
+	fi
+	
 	if [ -n "`grep \^\"\# $1 is not set\" $kernel_tf`" ] ; then
-		sed -i "s/\# $1 is not set/$1=y/" $kernel_tf
+		sed -i "s/\# $1 is not set/$1=$own/" $kernel_tf
 	fi
 }
 
@@ -139,7 +142,26 @@ fi
 # wireguard
 if [ "$CONFIG_FIRMWARE_INCLUDE_WIREGUARD" = "y" ]; then
 	func_enable_kernel_param "CONFIG_WIREGUARD"
+else
+	func_disable_kernel_param "CONFIG_WIREGUARD"
 fi
+# SQM QOS
+if [ "$CONFIG_FIRMWARE_INCLUDE_SQM" = "y" ]; then
+	func_enable_kernel_param "CONFIG_NF_CONNTRACK_EVENTS"
+	sed -i "/CONFIG_NF_CONNTRACK_EVENTS=y/a\CONFIG_NF_CONNTRACK_CHAIN_EVENTS=y" $kernel_tf
+	func_enable_kernel_param "CONFIG_NF_CONNTRACK_TIMEOUT"
+	func_enable_kernel_param "CONFIG_NET_SCH_SFQ" "m"
+	sed -i "/CONFIG_NET_SCH_SFQ=m/a\CONFIG_NET_SCH_CAKE=m" $kernel_tf
+	func_enable_kernel_param "CONFIG_NET_SCH_CODEL" "m"
+	func_enable_kernel_param "CONFIG_NET_ACT_IPT" "m"
+	func_enable_kernel_param "CONFIG_IFB"
+fi
+#cpu超频
+if [ "$CONFIG_FIRMWARE_INCLUDE_OC" = "y" ]; then	
+	sed -i "/CONFIG_RALINK_MT7621=y/a\CONFIG_MT7621_OC=y" $kernel_tf
+	sed -i '/CONFIG_MT7621_OC=y/a\CONFIG_MT7621_CPU_FREQ="'$CONFIG_FIRMWARE_MT7621_OC'"' $kernel_tf
+fi
+
 ############################# USB #####################################
 if [ "$CONFIG_FIRMWARE_ENABLE_USB" != "y" ] || [ -z "$CONFIG_USB_SUPPORT" ] ; then
 	func_disable_busybox_param "CONFIG_FDISK"
@@ -182,19 +204,4 @@ fi
 echo --------------------------MAKE-DEP--------------------------------
 make dep
 echo --------------------------MAKE-ALL--------------------------------
-make12 symbols)
-CONFIG_FIRMWARE_PRODUCT_ID="WR1200JS"
-
-### Linux kernel and toolchain
-CONFIG_FIRMWARE_INCLUDE_SFE=y
-
-CONFIG_LINUXDIR=linux-4.4.x
-
-############################################################
-### Linux kernel configuration
-############################################################
-
-### Enable IPv6 support
-CONFIG_FIRMWARE_ENABLE_IPV6=y
-
-CONFIG_FIRMWARE_INCLUDE_LANG_CN=y
+make
