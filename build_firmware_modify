@@ -179,29 +179,6 @@ fi
 if [ "$CONFIG_FIRMWARE_INCLUDE_SFE" = "y" ] ; then
 	func_enable_kernel_param "CONFIG_SHORTCUT_FE"
 fi
-# wireguard
-if [ "$CONFIG_FIRMWARE_INCLUDE_WIREGUARD" = "y" ]; then
-	func_enable_kernel_param "CONFIG_WIREGUARD"
-else
-	func_disable_kernel_param "CONFIG_WIREGUARD"
-fi
-# SQM QOS
-if [ "$CONFIG_FIRMWARE_INCLUDE_SQM" = "y" ]; then
-	func_enable_kernel_param "CONFIG_NF_CONNTRACK_EVENTS"
-	sed -i "/CONFIG_NF_CONNTRACK_EVENTS=y/a\CONFIG_NF_CONNTRACK_CHAIN_EVENTS=y" $kernel_tf
-	func_enable_kernel_param "CONFIG_NF_CONNTRACK_TIMEOUT"
-	func_enable_kernel_param "CONFIG_NET_SCH_SFQ" "m"
-	sed -i "/CONFIG_NET_SCH_SFQ=m/a\CONFIG_NET_SCH_CAKE=m" $kernel_tf
-	func_enable_kernel_param "CONFIG_NET_SCH_CODEL" "m"
-	func_enable_kernel_param "CONFIG_NET_ACT_IPT" "m"
-	func_enable_kernel_param "CONFIG_IFB"
-fi
-#cpu超频
-if [ "$CONFIG_FIRMWARE_INCLUDE_OC" = "y" ]; then	
-	sed -i "/CONFIG_RALINK_MT7621=y/a\CONFIG_MT7621_OC=y" $kernel_tf
-	sed -i '/CONFIG_MT7621_OC=y/a\CONFIG_MT7621_CPU_FREQ="'$CONFIG_FIRMWARE_MT7621_OC'"' $kernel_tf
-fi
-
 fi
 ############################# XFRM ####################################
 #if [ "$CONFIG_FIRMWARE_INCLUDE_SSWAN" = "y" ] ; then
