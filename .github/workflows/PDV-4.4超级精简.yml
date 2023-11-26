@@ -49,7 +49,6 @@ jobs:
     - name: Compile the firmware
       run: |
         cd /opt/padavan-4.4/trunk
-        sed -i '16,55d' ./build_firmware_modify
         sh mod.sh
         mkdir -p ${images_dir}
         for m in $targets; do fakeroot ./build_firmware_ci $m; \
