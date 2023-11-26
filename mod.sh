@@ -12,6 +12,6 @@ echo '修改NTP2为国家授时中心'
 sed -i "s/time1.cloud.tencent.com/ntp.ntsc.ac.cn/g" ./user/shared/defaults.h
 
 echo '超级精简配置'
-sed -i '25,55d' ./build_firmware_modify
+sed -i '25,54d' ./build_firmware_modify
 sed -i '/### Enable USB support/,$d' ./configs/templates/*.config
 sed -i '$a\CONFIG_FIRMWARE_INCLUDE_LANG_CN=y'  ./configs/templates/*.config
